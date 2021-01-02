@@ -1,8 +1,8 @@
 <?php
 
-require("Document.php");
+include_once("Document.php");
 
-final class textDocument implements Document
+class TextDocument implements Document
 {
     public function getSize() : int
     {
@@ -25,7 +25,7 @@ final class textDocument implements Document
         $this->fileSize = count($linesArray);
     }
 
-    private $fileSize;
-    private $fileContent;
+    protected $fileSize;
+    protected $fileContent;
 }
 
