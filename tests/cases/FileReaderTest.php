@@ -27,4 +27,61 @@ class FileReaderTest extends TestCase
 
         unlink($tmpDir);
     }
+
+    public function testUnequalFiles() : void
+    {
+        $firstTmpDir = __DIR__."/tmpFiles/testUnequalFileCaseFIRST.tmp";
+        $secondTmpDir = __DIR__."/tmpFiles/testUnequalFileCaseSECOND.tmp";
+
+        $firstTestFile = fopen($firstTmpDir, "w");
+        fwrite($firstTestFile, "hello world1");
+        fclose($firstTestFile);
+
+        $secondTestFile = fopen($secondTmpDir, "w");
+        fwrite($secondTestFile, "hello world2");
+        fclose($secondTestFile);
+
+        $firstTestTextDoc = FileReader::readPath($firstTmpDir);
+        $secondTestTextDoc = FileReader::readPath($secondTmpDir);
+
+        self::assertNotEquals($firstTestTextDoc, $secondTestTextDoc);
+
+        unlink($firstTmpDir);
+        unlink($secondTmpDir);
+    }
+
+    public function testEmptyFile() : void
+    {
+        $testTextDoc = new TextDocument(array());
+
+        $tmpDir = __DIR__."/tmpFiles/testEmptyFileCase.tmp";
+
+        $testFile = fopen($tmpDir, "w");
+        fclose($testFile);
+
+        $testTextDocFromFile = FileReader::readPath($tmpDir);
+
+        self::assertEquals($testTextDocFromFile, $testTextDoc);
+    }
+
+    public function testEmptyAndNotEmptyFiles() : void
+    {
+        $firstTmpDir = __DIR__."/tmpFiles/testEmptyAndNotEmptyFilesCaseFIRST.tmp"; // empty
+        $secondTmpDir = __DIR__."/tmpFiles/testEmptyAndNotEmptyFilesCaseSECOND.tmp";
+
+        $firstTestFile = fopen($firstTmpDir, "w");
+        fclose($firstTestFile);
+
+        $secondTestFile = fopen($secondTmpDir, "w");
+        fwrite($secondTestFile, "hello world");
+        fclose($secondTestFile);
+
+        $firstTestTextDoc = FileReader::readPath($firstTmpDir);
+        $secondTestTextDoc = FileReader::readPath($secondTmpDir);
+
+        self::assertNotEquals($firstTestTextDoc, $secondTestTextDoc);
+
+        unlink($firstTmpDir);
+        unlink($secondTmpDir);
+    }
 }
