@@ -19,13 +19,13 @@ class TextDocument implements Document
         return $this->fileContent[$index];
     }
 
-    public function __construct($linesArray)
+    public function __construct(array $linesArray)
     {
         $this->fileContent = $linesArray;
         $this->fileSize = count($linesArray);
     }
 
-    protected $fileSize;
-    protected $fileContent;
+    protected int $fileSize;
+    protected array $fileContent;
 }
 
