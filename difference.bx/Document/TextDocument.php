@@ -19,12 +19,24 @@ class TextDocument implements Document
         return $this->fileContent[$index];
     }
 
-    public function __construct(array $linesArray)
+    public function getName() : string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name) : void
+    {
+        $this->name = $name;
+    }
+
+    public function __construct(array $linesArray, string $name = "unnamed")
     {
         $this->fileContent = $linesArray;
         $this->fileSize = count($linesArray);
+        $this->name = $name;
     }
 
+    protected string $name;
     protected int $fileSize;
     protected array $fileContent;
 }
