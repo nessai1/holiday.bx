@@ -8,7 +8,7 @@ class FileReaderTest extends TestCase
     public function testNonExistingFile() : void
     {
         self::expectException(PathNotFoundException::class);
-        FileReader::readPath("blahblahblah");
+        FileReader::readTextDocument("blahblahblah");
     }
 
     public function testReachableFile() : void
@@ -22,7 +22,7 @@ class FileReaderTest extends TestCase
         fwrite($testFile, $testString);
         fclose($testFile);
 
-        $testTextDocFromFile = FileReader::readPath($tmpDir);
+        $testTextDocFromFile = FileReader::readTextDocument($tmpDir);
         self::assertEquals($testTextDoc, $testTextDocFromFile);
 
         unlink($tmpDir);
@@ -41,8 +41,8 @@ class FileReaderTest extends TestCase
         fwrite($secondTestFile, "hello world2");
         fclose($secondTestFile);
 
-        $firstTestTextDoc = FileReader::readPath($firstTmpDir);
-        $secondTestTextDoc = FileReader::readPath($secondTmpDir);
+        $firstTestTextDoc = FileReader::readTextDocument($firstTmpDir);
+        $secondTestTextDoc = FileReader::readTextDocument($secondTmpDir);
 
         self::assertNotEquals($firstTestTextDoc, $secondTestTextDoc);
 
@@ -59,7 +59,7 @@ class FileReaderTest extends TestCase
         $testFile = fopen($tmpDir, "w");
         fclose($testFile);
 
-        $testTextDocFromFile = FileReader::readPath($tmpDir);
+        $testTextDocFromFile = FileReader::readTextDocument($tmpDir);
 
         self::assertEquals($testTextDocFromFile, $testTextDoc);
     }
@@ -76,8 +76,8 @@ class FileReaderTest extends TestCase
         fwrite($secondTestFile, "hello world");
         fclose($secondTestFile);
 
-        $firstTestTextDoc = FileReader::readPath($firstTmpDir);
-        $secondTestTextDoc = FileReader::readPath($secondTmpDir);
+        $firstTestTextDoc = FileReader::readTextDocument($firstTmpDir);
+        $secondTestTextDoc = FileReader::readTextDocument($secondTmpDir);
 
         self::assertNotEquals($firstTestTextDoc, $secondTestTextDoc);
 

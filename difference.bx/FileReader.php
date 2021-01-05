@@ -10,7 +10,7 @@ class FileReader
      * @return TextDocument that contain all text-lines of the file
      * @throws PathNotFoundException if $path can't be reach
      */
-    public static function readPath(string $path) : TextDocument
+    public static function readTextDocument(string $path) : TextDocument
     {
         try
         {
