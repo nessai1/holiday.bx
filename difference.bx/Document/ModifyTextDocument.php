@@ -8,7 +8,7 @@ final class ModifyTextDocument implements Document
     /**
      * Function that return state of line with index = $index
      * @param int $index
-     * @return string = state of Document line (add/delete/stable)
+     * @return string = state of Document line (add/delete/edited/stable)
      * @throws WrongIndexException if index don't exist
      */
     public function getState(int $index) : string
@@ -22,7 +22,7 @@ final class ModifyTextDocument implements Document
     }
 
     /**
-     * Function that set state (add/delete/stable) to Document line with index = $index
+     * Function that set state (add/delete/edited/stable) to Document line with index = $index
      * @param int $index
      * @throws WrongIndexException
      */
@@ -66,5 +66,5 @@ final class ModifyTextDocument implements Document
         }
     }
     private Document $document;
-    private array $state; // every element have value: add/delete/stable
+    private array $state; // every element have value: add/delete/edited/stable
 }
