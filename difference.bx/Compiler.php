@@ -1,24 +1,22 @@
 <?php
 
+include_once (__DIR__ . 'Document/ModifyTextDocument.php');
+
 class Compiler
 {
-    private static $instances = [];
-
-    protected function __construct(){} // singleton can't construct
-    protected function __clone(){} // singleton isn't clone
-
-    public function compare($firstPath, $secondPath)
+    public static function compare(ModifyTextDocument &$before, ModifyTextDocument &$after) : void
     {
+      self::clearState($before);
+      self::clearState($after);
 
+      // TODO: some manipulation with files
     }
 
-    public static function getInstance() : Compiler
+    public static function clearState(ModifyTextDocument &$document) : void
     {
-        $compiler = static::class;
-        if (!isset(self::$instances[$compiler]))
+        for ($i = 0; $i < $document->getSize(); $i++)
         {
-            self::$instances[$compiler] = new static();
+            $document->setState($i, 'stable');
         }
-        return self::$instances[$compiler];
     }
 }
