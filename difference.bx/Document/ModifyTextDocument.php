@@ -1,25 +1,70 @@
 <?php
 
-include_once('TextDocument.php');
+include_once (__DIR__ . '/TextDocument.php');
+include_once (__DIR__ . '/../Exceptions/WrongIndexException.php');
 
-final class ModifyTextDocument extends TextDocument
+final class ModifyTextDocument implements Document
 {
-    public function getState($index) : ?string
+    /**
+     * Function that return state of line with index = $index
+     * @param int $index
+     * @return string = state of Document line (add/delete/stable)
+     * @throws WrongIndexException if index don't exist
+     */
+    public function getState(int $index) : string
     {
-        if ($index >= $this->fileSize || $index < 0)
+        if ($index >= $this->getSize() || $index < 0)
         {
-            return false;
+            throw new WrongIndexException($index);
         }
 
         return $this->state[$index];
     }
 
-    public function __construct($linesArray, $statesArray)
+    /**
+     * Function that set state (add/delete/stable) to Document line with index = $index
+     * @param int $index
+     * @throws WrongIndexException
+     */
+    public function setState(int $index, string $state) : void
     {
-        $this->fileContent = $linesArray;
-        $this->fileSize = count($linesArray);
-        $this->state = $statesArray;
+        if ($index >= $this->getSize() || $index < 0)
+        {
+            throw new WrongIndexException($index);
+        }
+
+        $this->state[$index] = $state;
     }
 
-    private $state;
+    public function getSize(): int
+    {
+        return $this->document->getSize();
+    }
+
+    public function getName(): string
+    {
+        return $this->document->getName();
+    }
+
+    public function getLine(int $index): ?string
+    {
+        return $this->document->getLine($index);
+    }
+
+    public function setName(string $name): void
+    {
+        $this->document->setName($name);
+    }
+
+    public function __construct(Document $document)
+    {
+        $this->document = $document;
+        $this->state = [];
+        for ($i = 0; $i < $document->getSize(); $i++)
+        {
+            $this->state[$i] = "stable";
+        }
+    }
+    private Document $document;
+    private array $state; // every element have value: add/delete/stable
 }
