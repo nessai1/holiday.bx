@@ -1,7 +1,0 @@
-twist
-and not test
-test
-when i run
-one
-two
-three
