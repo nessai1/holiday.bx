@@ -1,15 +1,52 @@
 <?php
 
-include_once (__DIR__ . 'Document/ModifyTextDocument.php');
+include_once (__DIR__ . '/Document/ModifyTextDocument.php');
 
 class Compiler
 {
+    /**
+     * Function that get links to before and after edit text files and set it right edit states for this two objects
+     * @param ModifyTextDocument $before link to the first file, before edit
+     * @param ModifyTextDocument $after link to the second file, after edit
+     * @throws WrongIndexException
+     */
     public static function compare(ModifyTextDocument &$before, ModifyTextDocument &$after) : void
     {
       self::clearState($before);
       self::clearState($after);
 
-      // TODO: some manipulation with files
+      $i = 0;
+      $j = 0;
+      for (; $i < $before->getSize(); $i++)
+      {
+          $matchExist = false;
+          for (; $j < $after->getSize(); $j++)
+          {
+            if ($before->getLine($i) == $after->getLine($j))
+            {
+                $matchExist = true; // leave 'stable' state-value
+                $j++;
+                break;
+            }
+            else if (Compiler::findMatches($before->getLine($i), $after->getLine($j)) > 0)
+            {
+                $matchExist = true;
+                $before->setState($i, 'edited');
+                $after->setState($j, 'edited');
+                $j++;
+                break;
+            }
+            $after->setState($j, 'add');
+          }
+          if (!$matchExist)
+          {
+              $before->setState($i, 'delete');
+          }
+      }
+      for (; $j < $after->getSize(); $j++)
+      {
+          $after->setState($j, 'add');
+      }
     }
 
     /**
