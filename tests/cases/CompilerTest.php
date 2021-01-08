@@ -68,4 +68,36 @@ class CompilerTest extends TestCase
         self::assertEquals('stable', $secondFile->getState(2));
         self::assertEquals('stable', $secondFile->getState(3));
     }
+
+    public function testUnequalFilesCase4() : void
+    {
+        $firstFile = new ModifyTextDocument(new SafeTextDocument(
+            FileReader::readTextDocument(__DIR__ . '/tmpFiles/unequalFirstCase.txt')));
+        $secondFile = new ModifyTextDocument(new SafeTextDocument(
+            FileReader::readTextDocument(__DIR__ . '/tmpFiles/unequalSecondCase.txt')));
+
+        Compiler::compare($firstFile, $secondFile);
+
+        // first file check
+        self::assertEquals('stable', $firstFile->getState(0));
+        self::assertEquals('edited', $firstFile->getState(1));
+        self::assertEquals('stable', $firstFile->getState(2));
+        self::assertEquals('edited', $firstFile->getState(3));
+        self::assertEquals('edited', $firstFile->getState(4));
+        self::assertEquals('stable', $firstFile->getState(5));
+        self::assertEquals('delete', $firstFile->getState(6));
+
+        // second file check
+        self::assertEquals('stable', $secondFile->getState(0));
+        self::assertEquals('edited', $secondFile->getState(1));
+        self::assertEquals('add', $secondFile->getState(2));
+        self::assertEquals('stable', $secondFile->getState(3));
+        self::assertEquals('edited', $secondFile->getState(4));
+        self::assertEquals('edited', $secondFile->getState(5));
+        self::assertEquals('stable', $secondFile->getState(6));
+        self::assertEquals('add', $secondFile->getState(7));
+        self::assertEquals('add', $secondFile->getState(8));
+        self::assertEquals('add', $secondFile->getState(9));
+        self::assertEquals('add', $secondFile->getState(10));
+    }
 }
