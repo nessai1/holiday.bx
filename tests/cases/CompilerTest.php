@@ -3,9 +3,22 @@
 use PHPUnit\Framework\TestCase;
 
 include_once (__DIR__ . "/../../difference.bx/Compiler.php");
+include_once (__DIR__ . "/../../difference.bx/Document/SafeTextDocument.php");
+include_once (__DIR__ . "/../../difference.bx/FileReader.php");
 
 class CompilerTest extends TestCase
 {
+    public function testMatches() : void
+    {
+        $line1 = "hello";
+        $line2 = "hallo";
+        $line3 = "asty";
+        $line4 = "home";
+        self::assertEquals(4, Compiler::findMatches($line1, $line2));
+        self::assertEquals(0, Compiler::findMatches($line1, $line3));
+        self::assertEquals(1, Compiler::findMatches($line1, $line4));
+    }
+
     public function testEqualFiles() : void
     {
         $fileLines = ['Hello world', 'Hello PHP', 'How are you?'];
@@ -16,7 +29,7 @@ class CompilerTest extends TestCase
         for ($i = 0; $i < count($fileLines); $i++)
         {
             self::assertEquals('stable', $firstFile->getState($i));
-            self::assertEquals('stable', $firstFile->getState($i));
+            self::assertEquals('stable', $secondFile->getState($i));
         }
     }
 
@@ -28,15 +41,13 @@ class CompilerTest extends TestCase
         $secondFile = new ModifyTextDocument(new SafeTextDocument(new TextDocument($afterLines)));
         Compiler::compare($firstFile,$secondFile);
 
-        for ($i = 0; $i < $firstFile->getSize(); $i++)
-        {
-            self::assertEquals('stable', $firstFile->getState($i));
-        }
+
+        self::assertEquals('stable', $firstFile->getState(0));
+        self::assertEquals('edited', $firstFile->getState(1));
 
         self::assertEquals('stable', $secondFile->getState(0));
-        self::assertEquals('add', $secondFile->getState(1));
-        self::assertEquals('stable', $secondFile->getState(2));
-
+        self::assertEquals('edited', $secondFile->getState(1));
+        self::assertEquals('add', $secondFile->getState(2));
     }
 
     public function testUnequalFilesCase2() : void
@@ -99,5 +110,27 @@ class CompilerTest extends TestCase
         self::assertEquals('add', $secondFile->getState(8));
         self::assertEquals('add', $secondFile->getState(9));
         self::assertEquals('add', $secondFile->getState(10));
+    }
+
+    public function testEmptyFileCompare() : void
+    {
+        $firstFile = new ModifyTextDocument(new SafeTextDocument(
+            FileReader::readTextDocument(__DIR__ . '/tmpFiles/unequalFirstCase.txt')));
+        $secondFile = new ModifyTextDocument(new SafeTextDocument(
+            FileReader::readTextDocument(__DIR__ . '/tmpFiles/emptyCase.txt')));
+
+        Compiler::compare($firstFile, $secondFile);
+
+        for ($i = 0; $i < $firstFile->getSize(); $i++)
+        {
+            self::assertEquals('delete', $firstFile->getState($i));
+        }
+
+        Compiler::compare($secondFile, $firstFile);
+
+        for ($i = 0; $i < $firstFile->getSize(); $i++)
+        {
+            self::assertEquals('add', $firstFile->getState($i));
+        }
     }
 }
