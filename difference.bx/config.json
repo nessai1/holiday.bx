@@ -1,0 +1,13 @@
+{
+  "Database": {
+    "host": "localhost",
+    "username": "php",
+    "password": "4%J(6Pw0A9S#",
+    "databaseName": "demo"
+  },
+  "Errors": {
+    "1": "An error occurred while executing the script",
+    "2": "An error occurred while accessing the database",
+    "3": "An error occurred while uploading files to the server"
+  }
+}
