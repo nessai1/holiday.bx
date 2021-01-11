@@ -2,13 +2,13 @@
 
 use JetBrains\PhpStorm\Pure;
 
-class DatabaseConnectException extends Exception
+class DatabaseQueryException extends Exception
 {
-
+    
     #[Pure]
     public function __construct(string $message)
     {
-        parent::__construct("[DatabaseConnect] {$message}");
+        parent::__construct("[DatabaseQuery] {$message}");
     }
 
 }

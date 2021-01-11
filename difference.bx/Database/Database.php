@@ -1,5 +1,8 @@
 <?php
 
+require (__DIR__ . '/../Exceptions/DatabaseConnectException.php');
+require (__DIR__ . '/../Exceptions/DatabaseQueryException.php');
+
 class Database
 {
     private static self $instance;
@@ -10,6 +13,27 @@ class Database
     protected function __construct()
     {
         $this->connection = mysqli_init();
+        $configureArray = $this->getDatabaseInfo();
+        $connectionResult = $this->connection->real_connect($configureArray['host'], $configureArray['username'],
+        $configureArray['password'], $configureArray['databaseName']);
+
+        try
+        {
+            if (!$connectionResult)
+            {
+                throw new DatabaseConnectException("Database connection error: {$this->connection->connect_error}");
+            }
+
+            $setCharsetResult = $this->connection->set_charset('utf8');
+            if (!$setCharsetResult)
+            {
+                throw new DatabaseConnectException("Database set charset error: {$this->connection->error}");
+            }
+        }
+        catch (DatabaseConnectException $e)
+        {
+            // TODO: logger and exit
+        }
 
     }
 
@@ -21,6 +45,24 @@ class Database
         }
 
         return self::$instance;
+    }
+
+    public function makeQuery(string $query) : ?mysqli_result
+    {
+        try
+        {
+            $queryResult = $this->connection->query($query);
+            if (!$queryResult)
+            {
+                throw new DatabaseConnectException("An error occurred during the request");
+            }
+        }
+        catch (DatabaseConnectException $e)
+        {
+            // TODO: some log and exit
+            exit();
+        }
+        return $queryResult;
     }
 
     protected function getDatabaseInfo() : array
@@ -46,11 +88,8 @@ class Database
             // TODO: add header
             exit();
         }
-
+        return $configureArray;
     }
 
-    public function sendQuerey(string $query) : void
-    {
-        // TODO: make query
-    }
+
 }
