@@ -1,8 +1,8 @@
 <?php
 
-require (__DIR__ . '/Document/TextDocument.php');
-require (__DIR__ . '/Exceptions/PathNotFoundException.php');
-require (__DIR__ . '/Exceptions/JSONReadException.php');
+require_once (__DIR__ . '/Document/TextDocument.php');
+require_once (__DIR__ . '/Exceptions/PathNotFoundException.php');
+require_once (__DIR__ . '/Exceptions/JSONReadException.php');
 
 class FileReader
 {

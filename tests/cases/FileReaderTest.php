@@ -5,6 +5,8 @@ require_once(__DIR__ . '/../../difference.bx/FileReader.php');
 
 class FileReaderTest extends TestCase
 {
+    /* readTextDocument test */
+
     public function testNonExistingFile() : void
     {
         self::expectException(PathNotFoundException::class);
@@ -83,5 +85,45 @@ class FileReaderTest extends TestCase
 
         unlink($firstTmpDir);
         unlink($secondTmpDir);
+    }
+
+    /* readJSON test */
+
+    public function testEmptyJSON() : void
+    {
+        self::expectException(JSONReadException::class);
+        FileReader::readJSON(__DIR__ . "/jsonTestCases/emptyJson.json");
+    }
+
+    public function testWrongJSON() : void
+    {
+        self::expectException(JSONReadException::class);
+        FileReader::readJSON(__DIR__ . "/jsonTestCases/wrongJson.json");
+    }
+
+    public function testSimpleJSON() : void
+    {
+        $testArr = ["hello" => "world", "test" => true];
+
+        $testArrJSON = FileReader::readJSON(__DIR__ . "/jsonTestCases/validJson.json");
+
+        self::assertEquals($testArr, $testArrJSON);
+    }
+
+    public function testGlobalsJSON() : void
+    {
+        $firstArr = ["a" => "25", "b" => "45"];
+        $secondArr = ["c" => "65", "d" => "85"];
+
+        $testArrJSON = FileReader::readJSON(__DIR__."/jsonTestCases/globalsJson.json", "secondGlobal");
+
+        self::assertEquals($secondArr, $testArrJSON);
+        self::assertNotEquals($firstArr, $testArrJSON);
+    }
+
+    public function testAbsentGlobalJSON() : void
+    {
+        self::expectException(JSONReadException::class);
+        FileReader::readJSON(__DIR__."/jsonTestCases/globalsJson.json", "thirdGlobal");
     }
 }
