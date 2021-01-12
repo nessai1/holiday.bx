@@ -1,7 +1,9 @@
 <?php
 
-require (__DIR__ . '/../Exceptions/DatabaseConnectException.php');
-require (__DIR__ . '/../Exceptions/DatabaseQueryException.php');
+require_once (__DIR__ . '/../FileReader.php');
+require_once (__DIR__ . '/../Logger.php');
+require_once (__DIR__ . '/../Exceptions/DatabaseConnectException.php');
+require_once (__DIR__ . '/../Exceptions/DatabaseQueryException.php');
 
 class Database
 {
@@ -12,27 +14,29 @@ class Database
     protected function __wakeup(){}
     protected function __construct()
     {
-        $this->connection = mysqli_init();
-        $configureArray = $this->getDatabaseInfo();
-        $connectionResult = $this->connection->real_connect($configureArray['host'], $configureArray['username'],
-        $configureArray['password'], $configureArray['databaseName']);
-
         try
         {
+            $this->connection = mysqli_init();
+            $configureArray = $this->getDatabaseInfo();
+            $connectionResult = $this->connection->real_connect($configureArray['host'], $configureArray['username'],
+                $configureArray['password'], $configureArray['databaseName']);
+
+
             if (!$connectionResult)
             {
                 throw new DatabaseConnectException("Database connection error: {$this->connection->connect_error}");
             }
-
             $setCharsetResult = $this->connection->set_charset('utf8');
             if (!$setCharsetResult)
             {
                 throw new DatabaseConnectException("Database set charset error: {$this->connection->error}");
             }
         }
-        catch (DatabaseConnectException $e)
+        catch (DatabaseConnectException | JSONReadException $e)
         {
-            // TODO: logger and exit
+            $logger = Logger::getInstance();
+            $logger->log($e->getMessage());
+            exit($e->getMessage());
         }
 
     }
@@ -47,48 +51,27 @@ class Database
         return self::$instance;
     }
 
-    public function makeQuery(string $query) : ?mysqli_result
+    public function makeQuery(string $query): mysqli_result|bool
     {
-        try
+        $queryResult = $this->connection->query($query);
+        if (!$queryResult)
         {
-            $queryResult = $this->connection->query($query);
-            if (!$queryResult)
-            {
-                throw new DatabaseConnectException("An error occurred during the request");
-            }
-        }
-        catch (DatabaseConnectException $e)
-        {
-            // TODO: some log and exit
-            exit();
+            throw new DatabaseQueryException("An error occurred during the request");
         }
         return $queryResult;
     }
 
     protected function getDatabaseInfo() : array
     {
-        try
-        {
-            $configurePath = __DIR__ . '/databaseInfo.json';
-            $configureJSON = file_get_contents($configurePath);
-            if (!$configureJSON)
-            {
-                throw new DatabaseConnectException("Can't open configure file '{$configurePath}'");
-            }
+        $configurePath = __DIR__ . '/../config.json';
+        $configureJSON = FileReader::readJSON($configurePath, 'Database');
 
-            $configureArray = json_decode($configureJSON, true);
-            if (!isset($configureArray['host']) || !isset($configureArray['username'])
-                || !isset($configureArray['password']) || !isset($configureArray['databaseName']))
-            {
-                throw new DatabaseConnectException("Wrong configure format in '{$configureJSON}'");
-            }
-        }
-        catch (DatabaseConnectException $e)
+        if (!isset($configureJSON['host']) || !isset($configureJSON['username'])
+            || !isset($configureJSON['password']) || !isset($configureJSON['databaseName']))
         {
-            // TODO: add header
-            exit();
+            throw new JSONReadException("Wrong configure format in '{$configurePath}' JSON file");
         }
-        return $configureArray;
+        return $configureJSON;
     }
 
 
