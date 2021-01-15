@@ -6,9 +6,9 @@ class DatabaseQueryException extends Exception
 {
     
     #[Pure]
-    public function __construct(string $message)
+    public function __construct(string $message, int $code = 2)
     {
-        parent::__construct("[DatabaseQuery] {$message}");
+        parent::__construct("[DatabaseQuery] {$message}", $code);
     }
 
 }
