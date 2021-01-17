@@ -18,19 +18,19 @@ class DataGetter
         $this->logger = Logger::getInstance();
     }
 
-    protected function getFileContentByID($id) : array
+    protected function getFileContentByID(int $id) : array
     {
         $queryResult = $this->database->makeQuery("SELECT CONTENT FROM file_content WHERE FILE_ID = {$id} ORDER BY LINE");
         return $queryResult->fetch_all();
     }
 
-    protected function getFileStatesByID($id) : array
+    protected function getFileStatesByID(int $id) : array
     {
         $queryResult = $this->database->makeQuery("SELECT LINE_STATE FROM file_state WHERE FILE_ID = {$id} ORDER BY LINE");
         return $queryResult->fetch_all();
     }
 
-    protected function getFileNameByID($id) : array
+    protected function getFileNameByID(int $id) : array
     {
         $queryResult = $this->database->makeQuery("SELECT FILE_NAME FROM files WHERE ID = {$id}");
         return $queryResult->fetch_assoc();
@@ -53,7 +53,18 @@ class DataGetter
             $firstTextDoc->setName($firstFileInfo['FILE_NAME']);
             $secondTextDoc->setName($secondFileInfo['FILE_NAME']);
 
-
+            $statesFirstFile = $this->getFileStatesByID($filesIDs['FIRST_FILE']);
+            $statesSecondFile = $this->getFileStatesByID($filesIDs['SECOND_FILE']);
+            var_dump($statesFirstFile);
+            echo ("OK");
+            for ($i = 0; $i < $firstTextDoc->getSize(); $i++)
+            {
+                $firstTextDoc->setState($i, $statesFirstFile[$i][0]);
+            }
+            for ($i = 0; $i < $secondTextDoc->getSize(); $i++)
+            {
+                $secondTextDoc->setState($i, $statesSecondFile[$i][0]);
+            }
         }
         catch (DataGetterException $e)
         {
