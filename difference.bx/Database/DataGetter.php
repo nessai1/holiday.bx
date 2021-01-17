@@ -18,22 +18,33 @@ class DataGetter
         $this->logger = Logger::getInstance();
     }
 
+    protected function getColumnFromTable(array $sourceTable, int $colPosition) : array
+    {
+        $resultTable = array();
+        foreach ($sourceTable as $value)
+        {
+            $resultTable[] = $value[$colPosition];
+        }
+        return $resultTable;
+    }
+
     protected function getFileContentByID(int $id) : array
     {
         $queryResult = $this->database->makeQuery("SELECT CONTENT FROM file_content WHERE FILE_ID = {$id} ORDER BY LINE");
-        return $queryResult->fetch_all();
+        return $this->getColumnFromTable($queryResult->fetch_all(), 0);
     }
 
     protected function getFileStatesByID(int $id) : array
     {
         $queryResult = $this->database->makeQuery("SELECT LINE_STATE FROM file_state WHERE FILE_ID = {$id} ORDER BY LINE");
-        return $queryResult->fetch_all();
+        return $this->getColumnFromTable($queryResult->fetch_all(), 0);
     }
 
-    protected function getFileNameByID(int $id) : array
+    protected function getFileNameByID(int $id) : string
     {
         $queryResult = $this->database->makeQuery("SELECT FILE_NAME FROM files WHERE ID = {$id}");
-        return $queryResult->fetch_assoc();
+        $assocArrayFromQuery = $queryResult->fetch_assoc();
+        return $assocArrayFromQuery['FILE_NAME'];
     }
 
 
@@ -47,29 +58,35 @@ class DataGetter
             $firstTextDoc = new ModifyTextDocument(new TextDocument($this->getFileContentByID($filesIDs['FIRST_FILE'])));
             $secondTextDoc = new ModifyTextDocument(new TextDocument($this->getFileContentByID($filesIDs['SECOND_FILE'])));
 
-            $firstFileInfo = $this->getFileNameByID($filesIDs['FIRST_FILE']);
-            $secondFileInfo = $this->getFileNameByID($filesIDs['SECOND_FILE']);
+            $firstFileName = $this->getFileNameByID($filesIDs['FIRST_FILE']);
+            $secondFileName = $this->getFileNameByID($filesIDs['SECOND_FILE']);
 
-            $firstTextDoc->setName($firstFileInfo['FILE_NAME']);
-            $secondTextDoc->setName($secondFileInfo['FILE_NAME']);
+            $firstTextDoc->setName($firstFileName);
+            $secondTextDoc->setName($secondFileName);
 
-            $statesFirstFile = $this->getFileStatesByID($filesIDs['FIRST_FILE']);
-            $statesSecondFile = $this->getFileStatesByID($filesIDs['SECOND_FILE']);
-            var_dump($statesFirstFile);
-            echo ("OK");
+            $firstFileStates = $this->getFileStatesByID($filesIDs['FIRST_FILE']);
+            $secondFileStates = $this->getFileStatesByID($filesIDs['SECOND_FILE']);
+
             for ($i = 0; $i < $firstTextDoc->getSize(); $i++)
             {
-                $firstTextDoc->setState($i, $statesFirstFile[$i][0]);
+                $firstTextDoc->setState($i, $firstFileStates[$i]);
             }
+
             for ($i = 0; $i < $secondTextDoc->getSize(); $i++)
             {
-                $secondTextDoc->setState($i, $statesSecondFile[$i][0]);
+                $secondTextDoc->setState($i, $secondFileStates[$i]);
             }
         }
         catch (DataGetterException $e)
         {
             $this->logger->log($e->getMessage());
             throw new DataGetterException("An occurred error while finding compared files");
+        }
+        catch (DatabaseQueryException $e)
+        {
+            $message = "An occurred database query error while finding compare files: {$e->getMessage()}";
+            $this->logger->log($message);
+            throw new DataGetterException($message);
         }
         return $filesIDs;
     }
