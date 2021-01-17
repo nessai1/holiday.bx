@@ -52,8 +52,11 @@ class DataRecorder {
         {
             $safeFileName = $this->database->prepareString($fileName);
 
-            $this->database->makeQuery("INSERT INTO files (FILE_NAME, FILE_LINES) VALUES ('{$safeFileName}', {$fileSize})");
-            $queryResult = $this->database->makeQuery("SELECT MAX(ID) FROM files");
+            $query = "INSERT INTO files (FILE_NAME, FILE_LINES) VALUES ('{$safeFileName}', {$fileSize})";
+            $this->database->makeQuery($query);
+
+            $query = "SELECT MAX(ID) FROM files";
+            $queryResult = $this->database->makeQuery($query);
             $firstLineResult = $queryResult->fetch_row();
             $fileID = intval($firstLineResult[0]);
 
@@ -61,7 +64,9 @@ class DataRecorder {
             {
                 $line = $i+1;
                 $content = $this->database->prepareString($file->getLine($i));
-                $this->database->makeQuery("INSERT INTO file_content (FILE_ID, LINE, CONTENT) VALUES ({$fileID}, {$line}, '{$content}')");
+
+                $query = "INSERT INTO file_content (FILE_ID, LINE, CONTENT) VALUES ({$fileID}, {$line}, '{$content}')";
+                $this->database->makeQuery($query);
             }
         }
         catch (DatabaseQueryException $e)
@@ -87,7 +92,9 @@ class DataRecorder {
             for ($i = 0; $i < $file->getSize(); $i++) {
                 $line = $i + 1;
                 $state = $file->getState($i);
-                $this->database->makeQuery("INSERT INTO file_state (FILE_ID, LINE, LINE_STATE) VALUES ({$fileID}, {$line}, '{$state}')");
+
+                $query = "INSERT INTO file_state (FILE_ID, LINE, LINE_STATE) VALUES ({$fileID}, {$line}, '{$state}')";
+                $this->database->makeQuery($query);
             }
         }
         catch (DatabaseQueryException $e)
@@ -114,7 +121,8 @@ class DataRecorder {
         try
         {
             $date = date("Y-m-d");
-            $this->database->makeQuery("INSERT INTO compare (FIRST_FILE, SECOND_FILE, COMPARE_DATE) VALUES ({$firstFileID}, {$secondFileID}, DATE('{$date}'))");
+            $query = "INSERT INTO compare (FIRST_FILE, SECOND_FILE, COMPARE_DATE) VALUES ({$firstFileID}, {$secondFileID}, DATE('{$date}'))";
+            $this->database->makeQuery($query);
         }
         catch (DatabaseQueryException $e)
         {

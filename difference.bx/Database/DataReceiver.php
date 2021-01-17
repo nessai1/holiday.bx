@@ -30,19 +30,22 @@ class DataReceiver
 
     protected function getFileContentByID(int $id) : array
     {
-        $queryResult = $this->database->makeQuery("SELECT CONTENT FROM file_content WHERE FILE_ID = {$id} ORDER BY LINE");
+        $query = "SELECT CONTENT FROM file_content WHERE FILE_ID = {$id} ORDER BY LINE";
+        $queryResult = $this->database->makeQuery($query);
         return $this->getColumnFromTable($queryResult->fetch_all(), 0);
     }
 
     protected function getFileStatesByID(int $id) : array
     {
-        $queryResult = $this->database->makeQuery("SELECT LINE_STATE FROM file_state WHERE FILE_ID = {$id} ORDER BY LINE");
+        $query = "SELECT LINE_STATE FROM file_state WHERE FILE_ID = {$id} ORDER BY LINE";
+        $queryResult = $this->database->makeQuery($query);
         return $this->getColumnFromTable($queryResult->fetch_all(), 0);
     }
 
     protected function getFileNameByID(int $id) : string
     {
-        $queryResult = $this->database->makeQuery("SELECT FILE_NAME FROM files WHERE ID = {$id}");
+        $query = "SELECT FILE_NAME FROM files WHERE ID = {$id}";
+        $queryResult = $this->database->makeQuery($query);
         $assocArrayFromQuery = $queryResult->fetch_assoc();
         return $assocArrayFromQuery['FILE_NAME'];
     }
