@@ -18,6 +18,12 @@ class DataReceiver
         $this->logger = Logger::getInstance();
     }
 
+
+    /** Function that return only one column from 2D array
+     * @param array $sourceTable
+     * @param int $colPosition
+     * @return array
+     */
     protected function getColumnFromTable(array $sourceTable, int $colPosition) : array
     {
         $resultTable = array();
@@ -28,6 +34,12 @@ class DataReceiver
         return $resultTable;
     }
 
+
+    /** Function that return all lines of file through id
+     * @param int $id
+     * @return array
+     * @throws DatabaseQueryException
+     */
     protected function getFileContentByID(int $id) : array
     {
         $query = "SELECT CONTENT FROM file_content WHERE FILE_ID = {$id} ORDER BY LINE";
@@ -35,6 +47,12 @@ class DataReceiver
         return $this->getColumnFromTable($queryResult->fetch_all(), 0);
     }
 
+
+    /** Function that return all states of lines of file through id
+     * @param int $id
+     * @return array
+     * @throws DatabaseQueryException
+     */
     protected function getFileStatesByID(int $id) : array
     {
         $query = "SELECT LINE_STATE FROM file_state WHERE FILE_ID = {$id} ORDER BY LINE";
@@ -42,6 +60,12 @@ class DataReceiver
         return $this->getColumnFromTable($queryResult->fetch_all(), 0);
     }
 
+
+    /** Function that return filename with id = $id
+     * @param int $id
+     * @return string
+     * @throws DatabaseQueryException
+     */
     protected function getFileNameByID(int $id) : string
     {
         $query = "SELECT FILE_NAME FROM files WHERE ID = {$id}";
@@ -51,7 +75,16 @@ class DataReceiver
     }
 
 
-    public function getCompareSession(int $sessionID, &$firstTextDoc, &$secondTextDoc)
+    /**
+     * Function that require ID of compare session and
+     * two links for linking them to modifyTextObject resulting from the query
+     * @param int $sessionID
+     * @param $firstTextDoc link to the first new modify file
+     * @param $secondTextDoc link to the second new modify file
+     * @throws DataReceiverException
+     * @throws WrongIndexException
+     */
+    public function getCompareSession(int $sessionID, &$firstTextDoc, &$secondTextDoc) : void
     {
         try {
             $filesIDs = $this->database->makeQuery("SELECT FIRST_FILE, SECOND_FILE FROM compare WHERE ID = {$sessionID}")->fetch_assoc();
@@ -91,9 +124,19 @@ class DataReceiver
             $this->logger->log($message);
             throw new DataReceiverException($message);
         }
-        return $filesIDs;
+        catch (Exception $e)
+        {
+            $message = "an unexpected error occurred while finding compare files: {$e->getMessage()}";
+            $this->logger->log($message);
+            throw new DataReceiverException($message);
+        }
     }
 
+
+    /** Function that make query to db compare table and return array of all compares
+     * @return array assoc array with all compare sessions
+     * @throws DataReceiverException
+     */
     public function getAllCompareSessionsInfo() : array
     {
         try
@@ -113,6 +156,7 @@ class DataReceiver
         }
         return $queryResultArray;
     }
+
 
     public static function getInstance(Database $db) : self
     {
