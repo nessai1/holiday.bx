@@ -11,7 +11,7 @@ class Database
     protected mysqli $connection;
 
     protected function __clone(){}
-    protected function __wakeup(){}
+    //protected function __wakeup(){}
     protected function __construct()
     {
         try
@@ -59,6 +59,11 @@ class Database
             throw new DatabaseQueryException("An error occurred during the request");
         }
         return $queryResult;
+    }
+
+    public function prepareString(string $line) : string
+    {
+        return $this->connection->real_escape_string($line);
     }
 
     protected function getDatabaseInfo() : array
