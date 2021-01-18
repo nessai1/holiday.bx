@@ -9,7 +9,6 @@ try {
 catch (Exception $e)
 {
     Router::redirect('index.php', ['error' => "{$e->getCode()}"]);
-    exit();
 }
 
 ?>
@@ -24,7 +23,6 @@ catch (Exception $e)
         </tr>
 
         <?php
-        //var_dump($allCompares);
         for ($i = 0; $i < count($allCompares); $i++)
         {
             if ($i % 2)
