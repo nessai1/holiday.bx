@@ -1,0 +1,180 @@
+@import "codeTable", "navBar", "historyTable";
+
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.button {
+  background-color: #2293d7;
+  padding: 10px;
+  max-height: 38px;
+  max-width: 140px;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 14px;
+  border: 1px solid #78d1ff;
+
+  &_used {
+    background-color: #1aa6fc;
+    &:hover, :active {
+      background-color: #1aa6fc !important;
+    }
+  }
+
+  &:hover {
+    background-color: #1aa6fc;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    outline: none;
+    background-color: #0e78b4;
+  }
+
+}
+
+.indexLinks {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  &__header
+  {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 36px;
+  }
+
+  &__links
+  {
+    margin-top: 25px;
+  }
+}
+
+.loadForm {
+  margin-top: 40px;
+  //border: 1px solid #e1e4e8;
+  //border-radius: 6px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .areas {
+    display: flex;
+    flex-direction: row;
+    flex-basis: border-box;
+    justify-content: center;
+  }
+
+
+  &__file {
+    margin-top: 30px;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+  }
+
+  &__button {
+    margin-top: 20px;
+  }
+}
+
+
+
+.textInput {
+  margin-left: 40px;
+
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &__filename {
+    margin-bottom: 20px;
+    border: 1px solid #dcdcdc;
+    outline: none;
+  }
+
+  &__content {
+    display: flex;
+    font-family: 'JetBrains Mono', monospace;
+    width: 500px;
+    height: 300px;
+    background: #f6f8fa;
+    border: 2px solid #dcdcdc;
+    outline: none;
+    -moz-appearance: none;
+    border-radius: 2px;
+    resize: none;
+    font-size: 12px;
+
+  }
+}
+
+
+// compare
+
+
+.compareResult {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__title {
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 40px;
+  }
+
+  &__tables {
+    margin-top: 40px;
+    flex-direction: row;
+    .codeTable {
+      vertical-align: top;
+      margin-left: 40px;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 960px) {
+  .loadForm {
+    .areas {
+      flex-direction: column;
+    }
+  }
+
+  .textInput {
+    margin-left: 0;
+    margin-top: 30px;
+  }
+
+}
+
+// compare
+@media (max-width: 1100px) {
+  .compareResult {
+    &__tables {
+      flex-direction: column;
+      text-align: center;
+      .codeTable {
+        margin-top: 25px;
+        margin-left: 0;
+      }
+      padding-bottom: 20px;
+    }
+  }
+}

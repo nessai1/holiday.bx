@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+
+.history {
+  padding-top: 40px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.historyTable {
+  border-spacing: 0px;
+  border-collapse: collapse;
+  font-family: 'Open Sans', sans-serif;
+  border: 1px solid #070808;
+  th, td {
+    padding: 10px;
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__header {
+    color: #fff;
+    background-color: #070808;
+  }
+
+
+
+  &__content {
+    &:hover {
+      background-color: #dedddd;
+      cursor: pointer;
+    }
+    &_second {
+      background-color: #f5f5f5;
+    }
+  }
+}
