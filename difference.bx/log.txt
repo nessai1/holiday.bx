@@ -1,0 +1,46 @@
+
+[16.01.21][04:29:12] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:30:14] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:30:17] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:30:18] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:30:18] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:30:19] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:30:20] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:32:09] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:33:29] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:43:24] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:43:59] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:44:11] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[16.01.21][04:44:21] [Manipulator] add new compare db-query error: [DatabaseQuery] An error occurred during the request
+[17.01.21][06:48:56] [DataReceiver] comparison with input ID not found
+[17.01.21][06:50:15] [DataReceiver] comparison with input ID not found
+[18.01.21][10:18:32] [DataReceiver] comparison with input ID not found
+[18.01.21][10:20:07] [DataReceiver] comparison with input ID not found
+[18.01.21][10:20:10] [DataReceiver] comparison with input ID not found
+[18.01.21][10:20:15] [DataReceiver] comparison with input ID not found
+[18.01.21][10:20:16] [DataReceiver] comparison with input ID not found
+[18.01.21][10:20:26] [DataReceiver] comparison with input ID not found
+[18.01.21][10:20:27] [DataReceiver] comparison with input ID not found
+[18.01.21][10:20:27] [DataReceiver] comparison with input ID not found
+[18.01.21][10:20:28] [DataReceiver] comparison with input ID not found
+[18.01.21][10:21:03] [DataReceiver] comparison with input ID not found
+[18.01.21][10:21:17] [DataReceiver] comparison with input ID not found
+[18.01.21][10:21:36] [DataReceiver] comparison with input ID not found
+[18.01.21][11:43:41] [compare.php] One of input file not found
+[18.01.21][11:57:54] [compare.php] Wrong input type
+[19.01.21][12:24:32] [compare.php] Wrong input type
+[19.01.21][12:24:40] [compare.php] Wrong input type
+[19.01.21][12:27:12] [compare.php] Two texts are empty
+[19.01.21][12:27:19] [compare.php] Two texts are empty
+[19.01.21][12:27:34] [compare.php] Two texts are empty
+[19.01.21][12:32:30] [compare.php] One of input file not found
+[19.01.21][12:34:04] [compare.php] One of input file not found
+[19.01.21][12:44:57] [compare.php] Can't load files on the server, errors: [0:4]
+[19.01.21][12:45:13] [compare.php] Can't load files on the server, errors: [0:4]
+[19.01.21][12:45:19] [compare.php] Can't load files on the server, errors: [0:0]
+[19.01.21][12:45:29] [compare.php] Can't load files on the server, errors: [0:0]
+[19.01.21][12:46:20] [compare.php] Can't load files on the server, errors: [0:0]
+[19.01.21][01:03:58] [compare.php] Can't load files on the server, errors: [0:4]
+[19.01.21][01:04:03] [compare.php] Can't load files on the server, errors: [4:0]
+[19.01.21][01:23:27] [compare.php] Can't load files on the server, errors: [4:4]
+[19.01.21][01:23:33] [compare.php] Can't load files on the server, errors: [4:0]
