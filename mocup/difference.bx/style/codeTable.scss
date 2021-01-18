@@ -1,19 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  padding: 50px;
-}
-
 .codeTable {
   border-radius: 5px;
-  border: 1px #cacaca solid;
-  max-width: 960px;
+  border: 1px #f6f8fa solid;
+  max-width: 600px;
   overflow: hidden;
   font-family: 'JetBrains Mono', monospace;
   display: inline-block;
@@ -25,7 +15,8 @@ body {
     font-size: 16px;
     display: flex;
     justify-content: space-between;
-    background-color: #e5e5e5;
+    background-color: #e1e4e8;
+    border-bottom: 1px #f6f8fa solid;
     padding: 5px;
     color: #646464;
   }
@@ -147,4 +138,3 @@ body {
 
 
 }
-

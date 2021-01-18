@@ -9,7 +9,7 @@ body {
 
 .codeTable {
   border-radius: 5px;
-  border: 1px #cacaca solid;
+  border: 1px #f6f8fa solid;
   max-width: 960px;
   overflow: hidden;
   font-family: 'JetBrains Mono', monospace;
@@ -20,7 +20,7 @@ body {
     font-size: 16px;
     display: flex;
     justify-content: space-between;
-    background-color: #e5e5e5;
+    background-color: #e1e4e8;
     padding: 5px;
     color: #646464; }
   .codeTable__code {
@@ -58,15 +58,25 @@ body {
     background-color: #00ee75; }
   .codeTable_add:hover .codeTable__content {
     background-color: #35ff9a; }
-  .codeTable_remove .codeTable__numLine {
+  .codeTable_edited .codeTable__numLine {
+    background-color: #ff9900;
+    color: #a06b00;
+    border-right: 1px #ffb341 solid; }
+  .codeTable_edited .codeTable__content {
+    background-color: #ffd29b; }
+  .codeTable_edited:hover .codeTable__numLine {
+    background-color: #ee9f00; }
+  .codeTable_edited:hover .codeTable__content {
+    background-color: #ffbd3e; }
+  .codeTable_delete .codeTable__numLine {
     background-color: #ff5858;
     color: #b01010;
     border-right: 1px #d75c5c solid; }
-  .codeTable_remove .codeTable__content {
+  .codeTable_delete .codeTable__content {
     background-color: #ffadad; }
-  .codeTable_remove:hover .codeTable__numLine {
+  .codeTable_delete:hover .codeTable__numLine {
     background-color: #e25d5d; }
-  .codeTable_remove:hover .codeTable__content {
+  .codeTable_delete:hover .codeTable__content {
     background-color: #ff9999; }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  background-color: #070808;
+  width: 100%;
+  color: #fff;
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  padding: 15px 50px;
+
+  li {
+    display: inline;
+    margin-left: 25px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
