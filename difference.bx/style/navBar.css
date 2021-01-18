@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+.navbar {
+  background-color: #070808;
+  width: 100%;
+  color: #fff;
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  padding: 15px 50px; }
+  .navbar li {
+    display: inline;
+    margin-left: 25px; }
+    .navbar li a {
+      color: #fff;
+      text-decoration: none;
+      transition: 75ms; }
+      .navbar li a:hover {
+        color: #d5d5d5;
+        transition: 75ms; }
+    .navbar li:first-child {
+      margin-left: 0; }
+
+/*# sourceMappingURL=navBar.css.map */

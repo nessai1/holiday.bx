@@ -8,6 +8,11 @@
   "Errors": {
     "1": "An error occurred while executing the script",
     "2": "An error occurred while accessing the database",
-    "3": "An error occurred while uploading files to the server"
+    "3": "An error occurred while uploading files to the server",
+    "4": "An error has occurred due to invalid data",
+    "5": "Invalid form of data input",
+    "6": "Файлы не были загруженны на сервер из-за возникшей ошибки",
+    "7": "Нужно загрузить хотя-бы один непустой текст для сравнения",
+    "8": "Названия текстов нужно указывать обязательно"
   }
 }
