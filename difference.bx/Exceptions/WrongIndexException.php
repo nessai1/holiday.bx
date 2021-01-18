@@ -1,12 +1,10 @@
 <?php
 
-use JetBrains\PhpStorm\Pure;
 
 class WrongIndexException extends Exception
 {
     private int $index;
 
-    #[Pure]
     public function __construct($index)
     {
         $this->index = $index;

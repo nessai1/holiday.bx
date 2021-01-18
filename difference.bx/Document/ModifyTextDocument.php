@@ -1,7 +1,7 @@
 <?php
 
-include_once (__DIR__ . '/TextDocument.php');
-include_once (__DIR__ . '/../Exceptions/WrongIndexException.php');
+require_once (__DIR__ . '/TextDocument.php');
+require_once (__DIR__ . '/../Exceptions/WrongIndexException.php');
 
 final class ModifyTextDocument implements Document
 {

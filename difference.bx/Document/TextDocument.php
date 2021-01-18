@@ -1,6 +1,6 @@
 <?php
 
-include_once("Document.php");
+require_once("Document.php");
 
 class TextDocument implements Document
 {
