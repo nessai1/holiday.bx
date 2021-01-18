@@ -8,6 +8,7 @@
   "Errors": {
     "1": "An error occurred while executing the script",
     "2": "An error occurred while accessing the database",
-    "3": "An error occurred while uploading files to the server"
+    "3": "An error occurred while uploading files to the server",
+    "4": "An error has occurred due to invalid data"
   }
 }

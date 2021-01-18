@@ -213,6 +213,16 @@
       .compareResult__tables .codeTable:first-child {
         margin-left: 0; }
 
+.errorMessage {
+  background-color: #ffb4bd;
+  color: #b12a2a;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  max-width: 500px;
+  padding: 30px;
+  border: 2px solid #9a3a3a;
+  border-radius: 8px; }
+
 @media (max-width: 960px) {
   .loadForm .areas {
     flex-direction: column; }

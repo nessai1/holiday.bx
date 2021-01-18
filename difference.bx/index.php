@@ -1,9 +1,45 @@
 <?php
 require_once (__DIR__ . '/header.php');
+require_once (__DIR__ . '/FileReader.php');
 ?>
 
-<div class="indexLinks">
-    <h1 class="indexLinks__header">Добро пожаловать</h1>
+<div class="indexLinks" style="align-items: center">
+    <?php
+
+    if (isset($_GET['error']))
+    {
+        try
+        {
+            $errors = FileReader::readJSON(__DIR__.'/config.json', 'Errors');
+            if (isset($errors[$_GET['error']]))
+            {
+                $message = $errors[$_GET['error']];
+            }
+            else
+            {
+                $message = "An unexpected error occurred";
+            }
+        }
+        catch (Exception $e)
+        {
+            $message = "Произошла серьезная ошибка в чтении файла конфигурации.";
+        }
+    }
+
+    ?>
+
+    <?php
+    if (!isset($_GET['error']))
+        {
+            ?><h1 class="indexLinks__header">Добро пожаловать</h1><?php
+        }
+    else
+        {
+            ?><div class="errorMessage"><?=$message?></div>
+    <?php
+        }
+    ?>
+
     <div class="indexLinks__links">
         <button class="button" id="fileButton" onclick="changeFileForm()">Сравнить файлы</button>
         <button class="button" id="textButton" onclick="changeTextForm()">Сравнить текст</button>
