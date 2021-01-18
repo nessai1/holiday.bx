@@ -3,7 +3,7 @@
 .codeTable {
   border-radius: 5px;
   border: 1px #f6f8fa solid;
-  max-width: 600px;
+  width: 600px;
   overflow: hidden;
   font-family: 'JetBrains Mono', monospace;
   display: inline-block;
@@ -43,6 +43,7 @@
     padding-left: 25px;
   }
   &__content {
+    width: 100%;
     padding-left: 5px;
     white-space: nowrap;
   }
